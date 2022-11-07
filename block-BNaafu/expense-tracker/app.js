@@ -13,8 +13,7 @@ require('dotenv').config()
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-// var expensesrouter = require('./routes/expenses')
-// var commentsrouter = require('./routes/comments')
+
 
 var auth = require('./middlewares/auth')
 
@@ -56,8 +55,7 @@ app.use(auth.userInfo)
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-// app.use('/espenses', expensesrouter)
-// app.use('/comments', commentsrouter)
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

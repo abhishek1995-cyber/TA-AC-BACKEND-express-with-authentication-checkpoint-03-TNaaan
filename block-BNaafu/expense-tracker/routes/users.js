@@ -5,7 +5,8 @@ var User = require('../models/user');
 var Income = require('../models/income');
 var Expense = require('../models/expense');
 var moment = require('moment');
-var bcrypt = require(`bcrypt`)
+var bcrypt = require(`bcrypt`);
+var auth = require('../middlewares/auth');
 
 
 
@@ -59,7 +60,7 @@ router.post('/login',(req,res,next)=>{
 
 
 /* GET -- LOADING PASSWORD RESET PAGE */
-router.get(`/password/reset`, (req,res, next)=> {
+router.get(`/password/reset`, auth.loggedInUser, (req,res, next)=> {
   let name = req.session.name
   res.render(`userPassReset`, {name: name})
 })
@@ -92,12 +93,12 @@ router.post(`/password/reset`, (req,res, next)=> {
 
 // users Onboard
 
-router.get('/onboard',(req,res,next)=>{
+router.get('/onboard', auth.loggedInUser,(req,res,next)=>{
   console.log(req.user)
   res.render('onboard')
 })
 
-router.get('/dashboard/expense',(req,res,next)=>{
+router.get('/dashboard/expense', auth.loggedInUser,(req,res,next)=>{
   res.render('expense')
 })
 
@@ -109,7 +110,7 @@ router.post('/dashboard/expense',(req,res,next)=>{
   })
 })
 
-router.get('/dashboard/income',(req,res,next)=>{
+router.get('/dashboard/income', auth.loggedInUser,(req,res,next)=>{
   res.render('income')
 });
 
@@ -120,26 +121,10 @@ router.post('/dashboard/income',(req,res,next)=>{
   })
 })
 
-// Dsitinct Function
-
-var incomeData = (req, res, next) => {
-  Income.distinct('source', (err, income) => {
-    res.locals.income = income;
-    next();
-  });
-};
-var expenseData = (req, res, next) => {
-  Expense.distinct('category', (err, expense) => {
-    res.locals.expense = expense;
-    next();
-  });
-};
 
  // Dahboard routes
 router.get(
-  '/dashboard',
-  // incomeData,
-  // expenseData,
+  '/dashboard', auth.loggedInUser,
   (req, res, next) => {
     var{category,source,date,expensedate} = req.query;
     var query = {};
@@ -150,13 +135,9 @@ router.get(
       query.source = source;
     }
     if(date){
-      // query.startDate = {$gte: startDate};
-      // query.endDate = {$lte: endDate}
       query.date = {$gte: date}
     }
     if(expensedate){
-      // query.startDate = {$gte: startDate};
-      // query.endDate = {$lte: endDate}
       query.expensedate = {$gte: expensedate}
     }
     Income.find(query, (err, income) => {
@@ -171,7 +152,6 @@ router.get(
           if (err) return next(err);
           Expense.distinct('expensedate',(err,expensedate)=>{
             if (err) return next(err);
-        // var data = res.locals.data;
         res.render('dashboard', { source, category, date, expensedate, income, expense });
       });
     })
@@ -185,7 +165,7 @@ router.get(
 
 // filter
 
-router.get('/dashboard/search', (req, res, next) => {
+router.get('/dashboard/search', auth.loggedInUser,(req, res, next) => {
   var query = req.query;
   var income = query.income;
   console.log(res.locals.income, 'Locals');
@@ -194,44 +174,10 @@ router.get('/dashboard/search', (req, res, next) => {
 
 // -------Logout route--------
 
-router.get('/logout', (req, res, next) => {
+router.get('/logout', auth.loggedInUser,(req, res, next) => {
   req.session.destroy();
   res.clearCookie('connect.sid');
   res.redirect('/users/login');
 });
-// router.get('/dashboard',(req,res,next)=>{
-//   var {category, source,date} = req.query;
-//   var query = {};
-//   if(category ){
-//       query.category = category;
-//   } 
-//   if(source){
-//     query.source = source;
-//   }
-//   if(date){
-//     query.date =  date;
-//   }
-//   Income.find(query,(err,income)=>{
-//       if(err) return next(err);
-//       Expense.find(query,(err,expense)=>{
-//         if(err) return next(err);
-//         Income.distinct("source",(err,source)=>{
-//             if(err) return next(err);
-//             Income.distinct('date',(err,date)=>{
-//               if (err) return next(err);
-//             Expense.distinct('category',(err,category)=>{
-//               if(err) return next(err);
-//               Expense.distinct('date',(err,date)=>{
-//                 if (err) return next(err);
-//               console.log(income,source,expense,category)
-//               res.render('dashboard',{income,source,expense,category,date});
-//             })
-//           })
-//         })
-//         })
-//       })
-//   })
-// })
-
 
 module.exports = router;
