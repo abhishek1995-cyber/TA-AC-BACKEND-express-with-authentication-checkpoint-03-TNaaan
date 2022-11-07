@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header class="heading">
+     <nav class="container flex">
+      <ul>
+        <a href="/">Expense Tracker</a>
+      </ul>
+      <ul class="flex">
+        <li >
+          <a href="/users/login">Login
+          </a>
+        </li>
+        <li>
+          <a class="nav-menu" href="/users/register"> Register
+          </a>
+        </li>
+      </ul>
+     </nav>
+    </header>
+    <main>
+      <ul class="container text-center">
+        <li class="login">
+          <a  href="/auth/google">Login with google</a>
+      </li>
+      <li class="login">
+          <a  href="/auth/github">Login with github</a>
+      </li>
+      </ul>
+    </main>
+  </body>
+</html>

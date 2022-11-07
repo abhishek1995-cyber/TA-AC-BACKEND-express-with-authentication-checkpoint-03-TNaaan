@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blog Application</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <header class="heading">
+      <nav class="container flex">
+       <ul>
+         <a href="/">Expense Tracker</a>
+       </ul>
+       <ul class="flex">
+         <li>
+          <a href="/users/dashboard/expense">Add Expenses</a>
+        </li>
+        <li>
+          <a  class="mg-left" href="/users/dashboard/income">Add Income</a>
+        </li>
+        <li >
+          <a  class="mg-left" href="/users/logout">Logout
+          </a>
+        </li>
+       </ul>
+      </nav>
+     </header>
+   
+    <main class="text-center flex">
+      <div class="filter">
+          <form action="/users/dashboard" method="GET"> Filter
+              <legend class="mg-top" >All Source
+                <select name="source" >
+                  <option  value="">select</option>
+                  <% source.forEach(s =>{ %>
+                      <option value="<%= s %>"><%= s %> </option>
+                  <% }) %>
+                </select>
+              </legend>
+              <legend class="mg-top" >All categories
+                  <select name="category" >
+                      <option  value="">select</option>
+                      <% category.forEach(c =>{ %>
+                          <option value="<%= c %>"><%= c %> </option>
+                      <% }) %>
+                    </select>
+              </legend>
+              <legend class="mg-top">source  date:
+                <input  type="date" name="date" >
+              </legend>
+              <legend class="mg-top">Expense date:
+                  <input  type="date" name="expensedate">
+                </legend>
+              <input class="mg-top" type="submit" value="submit">
+            </form>
+      </div>
+        <div class="flex details">
+          <% income.forEach((i) => { %>
+          <div class="income"> 
+            <h2>Income</h2>
+            <span>Income:<%= i.income  %></span>
+            <span>Source: <%= i.source %></span>
+            <span>Amount:<%= i.amount %></span>
+            <span>Date:<%= i.date %></span>
+            <span>Type: <span class="green"><%= i.type %></span></span>
+          </div>
+          <% }) %> <% expense.forEach((e) => { %>
+          <div class="expense">
+            <h2> Expense</h2>
+            <span>Category: <%= e.category %></span>
+            <span>Amount:<%= e.expenseamount %></span>
+            <span>Date:<%= e.expensedate %></span>
+            <span>Type: <span class="red"><%= e.type %></span></span>
+          </div>
+          <% }) %>
+        </div>
+    </main>
+  </body>
+</html>
