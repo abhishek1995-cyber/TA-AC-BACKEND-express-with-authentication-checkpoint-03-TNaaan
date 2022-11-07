@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+    <header class="heading">
+        <nav class="container flex">
+         <ul>
+           <a href="/">Expense Tracker</a>
+         </ul>
+         <ul class="flex">
+           <li >
+             <a href="/users/logout">Logout
+             </a>
+           </li>
+           <li>
+             <a class="nav-menu" href="/users/password/reset"> Reset Password
+             </a>
+           </li>
+         </ul>
+        </nav>
+       </header>
+    <main class="text-center">
+        <h2 class="mg-top">
+            Add Income
+        </h2>
+        <fieldset>
+            <form action="/users/dashboard/income" method="post">
+                <input class="input" type="text" name="source" placeholder="source of income">
+                <input class="input" type="number" name="amount", placeholder="source amount">
+                <input class="input" type="date" name="date" placeholder="date">
+               
+                <input class="input" type="number" name="income" placeholder="income from current month
+                ">
+                <input class="input" type="submit" value="submit">
+            </form>
+        </fieldset>
+    </main>
+</body>
+</html>

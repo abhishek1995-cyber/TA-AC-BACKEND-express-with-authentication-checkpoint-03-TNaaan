@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+    <header class="heading">
+        <nav class="container flex">
+         <ul>
+           <a href="/">Expense Tracker</a>
+         </ul>
+         <ul class="flex">
+           <li >
+             <a href="/users/logout">Logout
+             </a>
+           </li>
+           <li>
+             <a class="nav-menu" href="/users/password/reset"> Reset Password
+             </a>
+           </li>
+         </ul>
+        </nav>
+       </header>
+    <main class="text-center">
+        <h2 class="mg-top">Add Expense</h2>
+        <form action="/users/dashboard/expense" method="post">
+            <input class="input" type="text" name="category" placeholder="expense category">
+            <input class="input" type="number" name="expenseamount", placeholder="expense amount">
+            <input class="input" type="date" name="expensedate" placeholder="expense date">
+            <input class="input" type="submit" value="submit">
+        </form>
+    </main>
+</body>
+</html>
